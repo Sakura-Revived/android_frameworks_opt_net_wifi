@@ -3407,12 +3407,7 @@ public class ClientModeImpl extends StateMachine {
         String currentMacString = mWifiNative.getMacAddress(mInterfaceName);
         MacAddress currentMac = currentMacString == null ? null :
                 MacAddress.fromString(currentMacString);
-        MacAddress newMac;
-        if (config.macRandomizationSetting == WifiConfiguration.RANDOMIZATION_PERSISTENT) {
-            newMac = config.getOrCreateRandomizedMacAddress();
-        } else {
-            newMac = MacAddress.createRandomUnicastAddress();
-        }
+        MacAddress newMac = config.getOrCreateRandomizedMacAddress();
         mWifiConfigManager.setNetworkRandomizedMacAddress(config.networkId, newMac);
         if (!WifiConfiguration.isValidMacAddressForRandomization(newMac)) {
             Log.wtf(TAG, "Config generated an invalid MAC address");
@@ -4315,7 +4310,7 @@ public class ClientModeImpl extends StateMachine {
                     reportConnectionAttemptStart(config, mTargetRoamBSSID,
                             WifiMetricsProto.ConnectionEvent.ROAM_UNRELATED);
                     if (config.macRandomizationSetting
-                            != WifiConfiguration.RANDOMIZATION_NONE
+                            == WifiConfiguration.RANDOMIZATION_PERSISTENT
                             && mConnectedMacRandomzationSupported) {
                         configureRandomizedMacAddress(config);
                     } else {

@@ -1115,7 +1115,7 @@ public class WifiMetrics {
             if (config != null) {
                 mCurrentConnectionEvent.mConnectionEvent.useRandomizedMac =
                         config.macRandomizationSetting
-                        != WifiConfiguration.RANDOMIZATION_NONE;
+                        == WifiConfiguration.RANDOMIZATION_PERSISTENT;
                 mCurrentConnectionEvent.mConnectionEvent.connectionNominator =
                         mNetworkIdToNominatorId.get(config.networkId,
                                 WifiMetricsProto.ConnectionEvent.NOMINATOR_UNKNOWN);
@@ -3037,7 +3037,7 @@ public class WifiMetrics {
                 if (config.isPasspoint()) {
                     mWifiLogProto.numPasspointNetworks++;
                 }
-                if (config.macRandomizationSetting != WifiConfiguration.RANDOMIZATION_NONE) {
+                if (config.macRandomizationSetting == WifiConfiguration.RANDOMIZATION_PERSISTENT) {
                     mWifiLogProto.numSavedNetworksWithMacRandomization++;
                 }
             }
